@@ -157,7 +157,8 @@ for j = imi : imspace : imtot
         curr_img(cnt)=j;
         cnt=cnt+1;
 
-        Good_case_tmp(1) = prmt(1).frame_no;
+        Good_case_tmp(1) = prmt(1).frame_no;   
+        % Notice: this first case might not be good case.
     else
 
         imgn = imread(pathintif,j);
