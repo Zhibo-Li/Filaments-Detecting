@@ -11,7 +11,7 @@ function [prmt_new, Good_case_out] = update_parameters(imgn,prmt, prmt_index, Go
 % imshow(blur_img,[])
 % figure('Name','binarized image');
 % imshow(BI)
-figure('Name','skeletonization results', 'Position', [400 100 800 800]);
+figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [400 100 800 800]);
 subplot(2,1,1);
 imshow(labeloverlay(imadjust(imgn(lzero+1:end-lzero,lzero+1:end-lzero)),L,'Transparency',0));
 subplot(2,1,2);
@@ -36,7 +36,7 @@ try
             % imshow(blur_img,[])
             % figure('Name','binarized image');
             % imshow(BI)
-            figure('Name','binarized image');
+            figure('Name',['binarized image no.', num2str(prmt(prmt_index).frame_no)]);
             imshow(BI)
             figure('Name','skeletonization results');
             imshow(labeloverlay(blur_img,L,'Transparency',0))
@@ -48,7 +48,8 @@ try
             Good_case_out = Good_case_in;
         otherwise
             msgbox('Be careful and input again!!');  % To avoid other 'wrong' inputs.
-            Inputnum = input('\n \n \n \n Be careful and input again!!! \n Do you feel satisfied?: \n 1 = Yes \n 2 = No \n');
+            Inputnum = input(['\n \n \n \n Be careful and input again!!! \n ...' ...
+                'Do you feel satisfied?: \n 1 = Yes! \n 2 = No! \n 7 = Not good but accepted! \n']);
             switch Inputnum
                 case 1
                     prmt_new = prmt;
@@ -65,7 +66,7 @@ try
                     % imshow(blur_img,[])
                     % figure('Name','binarized image');
                     % imshow(BI)
-                    figure('Name','binarized image');
+                    figure('Name',['binarized image no.', num2str(prmt(prmt_index).frame_no)]);
                     imshow(BI)
                     figure('Name','skeletonization results');
                     imshow(labeloverlay(blur_img,L,'Transparency',0))
@@ -79,7 +80,8 @@ try
 
 catch
     msgbox('Be careful and input again!!');  % To avoid other 'wrong' inputs.
-    Inputnum = input('\n \n \n \n Be careful and input again!!! \n Do you feel satisfied?: \n 1 = Yes \n 2 = No \n');
+    Inputnum = input(['\n \n \n \n Be careful and input again!!! \n Do you ...' ...
+        'feel satisfied?: \n 1 = Yes! \n 2 = No! \n 7 = Not good but accepted! \n']);
     switch Inputnum
         case 1
             prmt_new = prmt;
@@ -96,7 +98,7 @@ catch
             % imshow(blur_img,[])
             % figure('Name','binarized image');
             % imshow(BI)
-            figure('Name','binarized image');
+            figure('Name',['binarized image no.', num2str(prmt(prmt_index).frame_no)]);
             imshow(BI)
             figure('Name','skeletonization results');
             imshow(labeloverlay(blur_img,L,'Transparency',0))
