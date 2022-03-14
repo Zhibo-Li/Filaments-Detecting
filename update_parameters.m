@@ -48,7 +48,7 @@ try
             Good_case_out = Good_case_in;
         otherwise
             msgbox('Be careful and input again!!');  % To avoid other 'wrong' inputs.
-            Inputnum = input(['\n \n \n \n Be careful and input again!!! \n ...' ...
+            Inputnum = input(['\n \n \n \n Be careful and input again!!! \n ' ...
                 'Do you feel satisfied?: \n 1 = Yes! \n 2 = No! \n 7 = Not good but accepted! \n']);
             switch Inputnum
                 case 1
@@ -80,7 +80,7 @@ try
 
 catch
     msgbox('Be careful and input again!!');  % To avoid other 'wrong' inputs.
-    Inputnum = input(['\n \n \n \n Be careful and input again!!! \n Do you ...' ...
+    Inputnum = input(['\n \n \n \n Be careful and input again!!! \n Do you ' ...
         'feel satisfied?: \n 1 = Yes! \n 2 = No! \n 7 = Not good but accepted! \n']);
     switch Inputnum
         case 1
