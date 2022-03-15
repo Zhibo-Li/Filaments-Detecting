@@ -44,11 +44,11 @@ xy = rejectfil(XY,centroid,improc,N_fil,ds,prcs_img,missed_frames,framelist);
 % apply B-spline to smooth out the centerline
 xy = spline_centerline(xy,N_fil,ds,npnts);
 
+Good_case(ismember(Good_case, xy.emptyframe)) = [];
 
 file2save = strcat(pathout,filesep,'trajectory_',tifrooth,'_batch',num2str(batch));
-
-save(strcat(file2save,'.mat'),'prmt','Good_case','initial_frame',...
-    'frame_step','final_frame','framelist','improc','InfoImage','ROI','missed_frames','prcs_img','xy');
+save(strcat(file2save,'.mat'),'prmt','Good_case','framelist','InfoImage','ROI','prcs_img','xy'); 
+% xy.frames includes prcs_img but is different to it.  
 
 figure('Name','trajectory');
 for k =1 : xy.nframe
