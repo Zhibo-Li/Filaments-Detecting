@@ -95,7 +95,7 @@ clear; close all; clc;
 [filename, pathname]=uigetfile({'G:\PhD, PMMH, ESPCI\Experimental Data (EXTRACTED)\20220216-Actin\AfterAveBGR\*.tif'}, 'Choose a file to be processed');  % input file
 
 % path for the result files
-pathout = uigetdir('G:\PhD, PMMH, ESPCI\Processing\', 'Choose the saving folder');
+pathout = uigetdir('G:\PhD, PMMH, ESPCI\Processing\20220216-Actin\results\', 'Choose the saving folder');
 [status,msg,msgID] = mkdir(pathout);
 
 % path of the experiment
@@ -118,8 +118,8 @@ prmt(1).ywin = 300;
 
 % define some parameters for the fibermetric filtering
 % fibermetric works better if the elongated object has a constant thickness across the image
-prmt(1).thickness = 15; % thickness of the filament in px
-prmt(1).structsensitivity = 0.8; % threshold for differentiating the tubular structure from the background
+prmt(1).thickness = 20; % thickness of the filament in px
+prmt(1).structsensitivity = 0.7; % threshold for differentiating the tubular structure from the background
 % The default value depends on the data type of image I, and is calculated 
 % as 0.01*diff(getrangefromclass(I)). For example, the default threshold is
 % 2.55 for images of data type uint8, and the default is 0.01 for images of 
@@ -127,11 +127,11 @@ prmt(1).structsensitivity = 0.8; % threshold for differentiating the tubular str
 
 % define some parameters for the gaussian blur
 prmt(1).lnoise = 3; % characteristic lengthscale of noise in pixels
-prmt(1).lobject = 30; % typical object size
+prmt(1).lobject = 20; % typical object size
 prmt(1).threshold = 0.07; % threshhold for setting pixels to 0 after convolution with gaussian kernel
 
 % define some parameters for morphological operations
-prmt(1).sensitivity = 0.8; % sensitivity for adaptive image binarization
+prmt(1).sensitivity = 0.7; % sensitivity for adaptive image binarization
 prmt(1).MinBranchLength = 15; % minimum branch length, in pixel, to be accepted in the skel function
 
 % define some parameters for b-spline fitting procedure
@@ -139,7 +139,7 @@ prmt(1).ds = 5; % constant segment length (in px) used for spacing the reference
 prmt(1).npnts = 5; % number of points per interval in the recontructed B-spline centerline
 
 %% Change the start frame:
-prmt(1).frame_no = 80; % the first frame you want to deal with.
+prmt(1).frame_no = 1; % the first frame you want to deal with.
 prmt_index = 1; % index of prmt
 
 %% TO CALCULATE!!!!!!!
