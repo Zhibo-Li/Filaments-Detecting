@@ -86,6 +86,15 @@ for n = 1:1:length(skeleton_coord(:,1))
         %Test all the pixels around this current pixel
         for m = 1:1:length(pos)
             %For each surrounding pixel, test if there is a corresponding pixel on the other side
+            %It's not enough, for example:
+            %         *OOOO
+            %              O
+            %               OOO
+            %                  O*
+            %                  O
+            %               OOO
+            %        *OOOOOO   
+            %There are three ends on this skeleton.
             continunity = [4,5,6] + pos(m);
             g = find(continunity > 8);
             if ~isempty(g)
