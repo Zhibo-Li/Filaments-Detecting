@@ -131,7 +131,7 @@ for j = imi : imspace : imtot
         clear xc yc
         xc = smooth(bnd{1}(:,1),1);
         yc = smooth(bnd{1}(:,2),1);
-        s{1} = transpose(poly2mask(xc,yc,col2-col1+1-2*lzero,row2-row1+1-2*lzero));
+        s{1} = transpose(poly2mask(xc,yc,col2-col1+1-2*lzero,row2-row1+1-2*lzero)); % Here, I only choose one filament!! (Zhibo)
         % sum all objects, with smoothed edges, to recontruct the original binary image
         BI = logical(sum(cat(3,s{:}),3));
         plank = zeros(xtot,ytot);
@@ -226,7 +226,7 @@ for j = imi : imspace : imtot
         clear xc yc
         xc = smooth(bnd{1}(:,1),1);
         yc = smooth(bnd{1}(:,2),1);
-        s{1} = transpose(poly2mask(xc,yc,col2-col1+1-2*lzero,row2-row1+1-2*lzero));
+        s{1} = transpose(poly2mask(xc,yc,col2-col1+1-2*lzero,row2-row1+1-2*lzero)); % Here, I only choose one filament!! (Zhibo)
         % sum all objects, with smoothed edges, to recontruct the original binary image
         BI = logical(sum(cat(3,s{:}),3));
         plank = zeros(xtot,ytot);
