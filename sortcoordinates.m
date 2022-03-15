@@ -12,7 +12,8 @@ for j = 1 : improc
     % check if the number of filament correspond to what expected & store the
     % frame number where they do not coincide
     
-    if N_fil ~= FilNum
+    if N_fil ~= FilNum   
+        % N_fil == FilNum == 1. Because I only choosed one in every frame (see skeletonization_multi_frames_calculation.m line 134 & 229). 
         disp(strcat('Error: wrong number of filaments in  image: ', num2str(j)))
         disp(strcat('Expected:',num2str(FilNum)));
         disp(strcat('Found:',num2str(N_fil)));
@@ -38,7 +39,13 @@ for j = 1 : improc
             
             % determines the locations of endpoints in the given skeleton.
             Ltest = ismember(L(:,:,j),i*ones(size(L(:,:,j),1),size(L(:,:,j),2)));
-            end_pts = find_skel_ends(Ltest,'not testing');
+            end_pts = find_skel_ends(Ltest,'testing');
+
+            if size(end_pts, 1) ~= 2
+                missed = [missed,j];  % Here, 'missed' means that there are not only two ends for the skeleton.
+                break
+            end
+
             end_pts(:,2) = size(L(:,:,j),2) - end_pts(:,2);
             [~,ipr] = max( sqrt( end_pts(:,1).^2 + end_pts(:,2).^2));
             % find the position of the end points in the coordinate matrix
@@ -84,10 +91,13 @@ for j = 1 : improc
                 
             end
         end
-        prcs_img(cnt)=curr_img(j); % store the orginal index of the image stack
+        if isempty(missed) || missed(end) ~= j
+            prcs_img(cnt)=curr_img(j); % store the orginal index of the image stack
+        end
         cnt=cnt+1;
     end
 end
+prcs_img(prcs_img == 0) = []; % the missed marked as 0 above, here is to remove them.
 improc=improc-length(missed); % number of processed image, with right number of filaments
 end
 
