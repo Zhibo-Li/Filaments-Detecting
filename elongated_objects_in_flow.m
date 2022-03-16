@@ -118,7 +118,7 @@ prmt(1).ywin = 300;
 
 % define some parameters for the fibermetric filtering
 % fibermetric works better if the elongated object has a constant thickness across the image
-prmt(1).thickness = 20; % thickness of the filament in px
+prmt(1).thickness = 30; % thickness of the filament in px
 prmt(1).structsensitivity = 0.7; % threshold for differentiating the tubular structure from the background
 % The default value depends on the data type of image I, and is calculated 
 % as 0.01*diff(getrangefromclass(I)). For example, the default threshold is
@@ -128,7 +128,7 @@ prmt(1).structsensitivity = 0.7; % threshold for differentiating the tubular str
 % define some parameters for the gaussian blur
 prmt(1).lnoise = 3; % characteristic lengthscale of noise in pixels
 prmt(1).lobject = 20; % typical object size
-prmt(1).threshold = 0.07; % threshhold for setting pixels to 0 after convolution with gaussian kernel
+prmt(1).threshold = 0.2; % threshhold for setting pixels to 0 after convolution with gaussian kernel
 
 % define some parameters for morphological operations
 prmt(1).sensitivity = 0.7; % sensitivity for adaptive image binarization

@@ -39,7 +39,7 @@ for j = 1 : improc
             
             % determines the locations of endpoints in the given skeleton.
             Ltest = ismember(L(:,:,j),i*ones(size(L(:,:,j),1),size(L(:,:,j),2)));
-            end_pts = find_skel_ends(Ltest,'testing');
+            end_pts = find_skel_ends(Ltest,'not testing');
 
             if size(end_pts, 1) ~= 2
                 missed = [missed,j];  % Here, 'missed' means that there are not only two ends for the skeleton.
