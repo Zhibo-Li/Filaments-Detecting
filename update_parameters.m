@@ -13,9 +13,9 @@ function [prmt_new, Good_case_out] = update_parameters(imgn,prmt, prmt_index, Go
 % imshow(BI)
 figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [400 100 800 800]);
 subplot(2,1,1);
-imshow(labeloverlay(imadjust(imgn(lzero+1:end-lzero,lzero+1:end-lzero)),L,'Transparency',0));
+imshow(labeloverlay(imadjust(imgn(lzero+1:end-lzero,lzero+1:end-lzero)),L,'Transparency',0,'Colormap','spring'));
 subplot(2,1,2);
-imshow(labeloverlay(blur_img,L,'Transparency',0));
+imshow(labeloverlay(blur_img,L,'Transparency',0,'Colormap','spring'));
 
 try
     Inputnum = input('Do you feel satisfied?: \n 1 = Yes! \n 2 = No! \n 7 = Not good but accepted! \n');
@@ -39,7 +39,7 @@ try
             figure('Name',['binarized image no.', num2str(prmt(prmt_index).frame_no)]);
             imshow(BI)
             figure('Name','skeletonization results');
-            imshow(labeloverlay(blur_img,L,'Transparency',0))
+            imshow(labeloverlay(blur_img,L,'Transparency',0,'Colormap','spring'))
 
             prmt = prmt_new;
             [prmt_new, Good_case_out]= update_parameters(imgn,prmt,prmt_index,Good_case_in);
@@ -69,7 +69,7 @@ try
                     figure('Name',['binarized image no.', num2str(prmt(prmt_index).frame_no)]);
                     imshow(BI)
                     figure('Name','skeletonization results');
-                    imshow(labeloverlay(blur_img,L,'Transparency',0))
+                    imshow(labeloverlay(blur_img,L,'Transparency',0,'Colormap','spring'))
                     prmt = prmt_new;
                     [prmt_new, Good_case_out]= update_parameters(imgn,prmt,prmt_index,Good_case_in);
                 case 7
@@ -101,7 +101,7 @@ catch
             figure('Name',['binarized image no.', num2str(prmt(prmt_index).frame_no)]);
             imshow(BI)
             figure('Name','skeletonization results');
-            imshow(labeloverlay(blur_img,L,'Transparency',0))
+            imshow(labeloverlay(blur_img,L,'Transparency',0,'Colormap','spring'))
             prmt = prmt_new;
             [prmt_new, Good_case_out]= update_parameters(imgn,prmt,prmt_index,Good_case_in);
         case 7
