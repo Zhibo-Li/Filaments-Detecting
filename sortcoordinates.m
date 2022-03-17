@@ -28,7 +28,7 @@ for j = 1 : improc
         
         
         
-        for i = 1 : N_fil
+        for i = 1 : N_fil  % Indeed, no need for this loop.
             
             % find the jumbled x & y coordinates of each filament in the FOV
             crd{i,cnt}(:,1) = rp(i).PixelList(:,1);
@@ -97,6 +97,9 @@ for j = 1 : improc
         cnt=cnt+1;
     end
 end
+
+XY(prcs_img == 0) = []; % It's important !!!!!!
+centroid(prcs_img == 0) = []; % It's important !!!!!!
 prcs_img(prcs_img == 0) = []; % the missed marked as 0 above, here is to remove them.
 improc=improc-length(missed); % number of processed image, with right number of filaments
 end
