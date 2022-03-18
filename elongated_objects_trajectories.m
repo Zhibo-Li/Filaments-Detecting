@@ -33,18 +33,28 @@ pathintif = strcat(basepath,tifrooth,'.tif');
 [L,curr_img,ROI,prmt,Good_case] = skeletonization_multi_frames_calculation(pathintif,frame_step,final_frame,prmt,prmt_index);
 prmt(end) = [];
 
-
-
 % coordinates & trajectories reconstruction
 % obtain the sequential coordinates XY of each filament centerline in the test image
-[XY,centroid,N_fil,improc,prcs_img,missed_frames] = sortcoordinates(L,curr_img,1);    % Notice that the '1' originally should be 'FilNum'
+[XY,centroid,N_fil,improc,prcs_img,missed_frames] = sortcoordinates(L,curr_img,1);    
+% input '1' is the expected number of filament in the image.
+
 % reject frames based on arclength: condition s - mean(s) > std(s)
 % output structure xy with coordinates, centroid, arclength
 xy = rejectfil(XY,centroid,improc,N_fil,ds,prcs_img,missed_frames,framelist);
 % apply B-spline to smooth out the centerline
 xy = spline_centerline(xy,N_fil,ds,npnts);
 
-Good_case(ismember(Good_case, xy.emptyframe)) = [];
+% remove cases that are calculated but have more than 2 ends.
+Good_case(ismember(Good_case, xy.emptyframe)) = [];  
+% correct the xwin, ywin, xskip and yskip correspondingly. 
+prmt_tmp = prmt;
+for ii = 1: length(prmt)-1
+    prmt(ii+1).xwin = prmt_tmp(ii).xwin;
+    prmt(ii+1).ywin = prmt_tmp(ii).ywin;
+    prmt(ii+1).xskip = prmt_tmp(ii).xskip;
+    prmt(ii+1).yskip = prmt_tmp(ii).yskip;
+end
+
 
 file2save = strcat(pathout,filesep,'trajectory_',tifrooth,'_batch',num2str(batch));
 save(strcat(file2save,'.mat'),'prmt','Good_case','framelist','InfoImage','ROI','prcs_img','xy'); 
