@@ -18,7 +18,7 @@ for j = imi : imspace : imtot
         imgn = imread(pathintif,j);  % Here does't need update_parameters because it's the first frame!
  
         thickness = prmt(prmt_index).thickness;
-        structsensitivity = prmt(prmt_index).structsensitivity;
+        structsensitivity = prmt(prmt_index).structsensitivity * diff(getrangefromclass(imgn));
 
         lnoise = prmt(prmt_index).lnoise;
         lobject = prmt(prmt_index).lobject;
@@ -177,7 +177,7 @@ for j = imi : imspace : imtot
         prmt = prmt_new;
 
         thickness = prmt(prmt_index).thickness;
-        structsensitivity = prmt(prmt_index).structsensitivity;
+        structsensitivity = prmt(prmt_index).structsensitivity * diff(getrangefromclass(imgn1));
 
         lnoise = prmt(prmt_index).lnoise;
         lobject = prmt(prmt_index).lobject;

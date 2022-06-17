@@ -5,7 +5,7 @@ function [fiber_img,blur_img,BI,L,lzero] = skeletonization_of_single_frame(imgn,
 FilNum = prmt(prmt_index).FilNum;
 
 thickness = prmt(prmt_index).thickness;
-structsensitivity = prmt(prmt_index).structsensitivity;
+structsensitivity = prmt(prmt_index).structsensitivity * diff(getrangefromclass(imgn));
 
 lnoise = prmt(prmt_index).lnoise;
 lobject = prmt(prmt_index).lobject;
