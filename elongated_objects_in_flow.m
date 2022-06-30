@@ -92,10 +92,10 @@
 %% CODE
 clear; close all; clc;
 
-[filename, pathname]=uigetfile({'G:\PhD, PMMH, ESPCI\Experimental Data (EXTRACTED)\20220217-Actin\AfterAveBGR\*.tif'}, 'Choose a file to be processed');  % input file
+[filename, pathname]=uigetfile({'G:\PhD, PMMH, ESPCI\Experimental Data (EXTRACTED)\20220624-SU8_Fibers-Individual_triangularPillar_uppoint\AfterAveBGR\*.tif'}, 'Choose a file to be processed');  % input file
 
 % path for the result files
-pathout = uigetdir('G:\PhD, PMMH, ESPCI\Processing\20220217-Actin\results\', 'Choose the saving folder');
+pathout = uigetdir('G:\PhD, PMMH, ESPCI\Processing\20220624-SU8_Fibers-Individual_triangularPillar_uppoint\results\', 'Choose the saving folder');
 [status,msg,msgID] = mkdir(pathout);
 
 % path of the experiment
@@ -107,7 +107,7 @@ tifname=filename;
 % batch number where storing the results
 prmt(1).batch = 1;
 % number of filaments in the current image sequence
-prmt(1).FilNum = 3;
+prmt(1).FilNum = 1;
 % set the 'interrogation windows' offset
 prmt(1).xskip = 20;  % right(+) left(-)
 prmt(1).yskip = 0;  % up(+) down(-)
@@ -118,8 +118,8 @@ prmt(1).ywin = 300;
 
 % define some parameters for the fibermetric filtering
 % fibermetric works better if the elongated object has a constant thickness across the image
-prmt(1).thickness = 50; % thickness of the filament in px
-prmt(1).structsensitivity = 0.7; % Here, the value indicates the percentage of the diff(getrangefromclass(I)).
+prmt(1).thickness = 20; % thickness of the filament in px
+prmt(1).structsensitivity = 0.005; % Here, the value indicates the percentage of the diff(getrangefromclass(I)).
 % !!! The structsensitivity of the results calculated before 2022/06/17
 % meant the absolute value. !!!
 % threshold for differentiating the tubular structure from the background
@@ -131,7 +131,7 @@ prmt(1).structsensitivity = 0.7; % Here, the value indicates the percentage of t
 % define some parameters for the gaussian blur
 prmt(1).lnoise = 3; % characteristic lengthscale of noise in pixels
 prmt(1).lobject = 30; % typical object size
-prmt(1).threshold = 0.1; % threshhold for setting pixels to 0 after convolution with gaussian kernel
+prmt(1).threshold = 0.07; % threshhold for setting pixels to 0 after convolution with gaussian kernel
 
 % define some parameters for morphological operations
 prmt(1).sensitivity = 0.7; % sensitivity for adaptive image binarization
