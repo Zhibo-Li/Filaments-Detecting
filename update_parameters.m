@@ -18,7 +18,7 @@ subplot(2,1,2);
 imshow(labeloverlay(blur_img,L,'Transparency',0,'Colormap','spring'));
 
 % To set a range of images that don't need to be confirmed every time.
-% msgbox('Check if you need this part first: update_parameters.m, line 20 !!'); 
+msgbox('Check if you need this part first: update_parameters.m, line 20 !!'); 
 if max(Good_case_in) < 200 || max(Good_case_in) > 50
     close all;
     prmt_new = prmt;
