@@ -85,8 +85,8 @@ for j = imi : imspace : imtot
         col1 = round(thecntrd(1)-xwin/2);
         col2 = round(thecntrd(1)+xwin/2);
 
-        row1 = max(row1, 1);  row2 = min(row2, ytot);
-        col1 = max(col1, 1);  col2 = min(col2, xtot);
+        row1 = max(row1, 1);  row2 = min(row2, xtot);
+        col1 = max(col1, 1);  col2 = min(col2, ytot);
         imgn1 = imgn(row1:row2,col1:col2);
         ROI(prmt_index).frame_no = j;
         ROI(prmt_index).row1 = row1; ROI(prmt_index).row2 = row2;
@@ -159,12 +159,22 @@ for j = imi : imspace : imtot
             col2 = ROI.col2;
         end
 
-        row1 = max(row1, 1);  row2 = min(row2, ytot);
-        col1 = max(col1, 1);  col2 = min(col2, xtot);
-        if col1 == 1; col2 = xwin+1; end
-        if col2 == xtot; col1 = xtot-xwin; end
-        if row1 == 1; row2 = ywin+1; end
-        if row2 == ytot; row1 = ytot-ywin; end
+        row1 = max(row1, 1);  row2 = min(row2, xtot);
+        col1 = max(col1, 1);  col2 = min(col2, ytot);
+        if col1 == 1 && col2 == ytot
+            col1 = 1; col2 = ytot;
+        elseif col1 == 1
+            col2 = xwin+1;
+        elseif col2 == ytot
+            col1 = ytot-xwin;
+        end
+        if row1 == 1 && row2 == xtot
+            row1 = 1; row2 = xtot;
+        elseif row1 == 1
+            row2 = ywin+1;
+        elseif row2 == xtot
+            row1 = xtot-ywin;
+        end
         imgn1 = imgn(row1:row2,col1:col2);
         
         ROI(prmt_index).frame_no = j;
