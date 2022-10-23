@@ -27,8 +27,11 @@ for j = imi : imspace : imtot
         sensitivity = prmt(prmt_index).sensitivity;
         MinBranchLength = prmt(prmt_index).MinBranchLength;
 
+        % apply 2-D median filtering to remove the 'salt & pepper' noise.
+        medfilt_imgn = medfilt2(imgn);
+
         % enanche fibers in the image with predefined thickness
-        fiber_img = fibermetric(imgn,thickness,'StructureSensitivity',structsensitivity);
+        fiber_img = fibermetric(medfilt_imgn,thickness,'StructureSensitivity',structsensitivity);
 
         % apply gaussian blur
         blur_img = gaussian_blur(fiber_img,lnoise,lobject,threshold);
@@ -92,8 +95,11 @@ for j = imi : imspace : imtot
         ROI(prmt_index).row1 = row1; ROI(prmt_index).row2 = row2;
         ROI(prmt_index).col1 = col1; ROI(prmt_index).col2 = col2;
 
+        % apply 2-D median filtering to remove the 'salt & pepper' noise.
+        medfilt_imgn = medfilt2(imgn1);
+
         % enanche fibers in the image with predefined thickness
-        fiber_img = fibermetric(imgn1,thickness,'StructureSensitivity',structsensitivity);
+        fiber_img = fibermetric(medfilt_imgn,thickness,'StructureSensitivity',structsensitivity);
 
         % apply gaussian blur
         blur_img = gaussian_blur(fiber_img,lnoise,lobject,threshold);
@@ -196,8 +202,11 @@ for j = imi : imspace : imtot
         sensitivity = prmt(prmt_index).sensitivity;
         MinBranchLength = prmt(prmt_index).MinBranchLength;
 
+        % apply 2-D median filtering to remove the 'salt & pepper' noise.
+        medfilt_imgn = medfilt2(imgn1);
+
         % enanche fibers in the image with predefined thickness
-        fiber_img = fibermetric(imgn1,thickness,'StructureSensitivity',structsensitivity);
+        fiber_img = fibermetric(medfilt_imgn,thickness,'StructureSensitivity',structsensitivity);
 
         % apply gaussian blur
         blur_img = gaussian_blur(fiber_img,lnoise,lobject,threshold);
