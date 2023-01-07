@@ -32,10 +32,10 @@ for j = 1 : improc
             
             % find the jumbled x & y coordinates of each filament in the FOV
             crd{i,cnt}(:,1) = rp(i).PixelList(:,1);
-            crd{i,cnt}(:,2) = size(L,2)-rp(i).PixelList(:,2);
+            crd{i,cnt}(:,2) = size(L,1)-rp(i).PixelList(:,2);
             
             % find the centroid position of the filament
-            centroid{i,cnt} = [cntrd(i).Centroid(1),size(L,2)-cntrd(i).Centroid(2)];
+            centroid{i,cnt} = [cntrd(i).Centroid(1),size(L,1)-cntrd(i).Centroid(2)];
             
             % determines the locations of endpoints in the given skeleton.
             Ltest = ismember(L(:,:,j),i*ones(size(L(:,:,j),1),size(L(:,:,j),2)));
