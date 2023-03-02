@@ -46,7 +46,7 @@ for j = 1 : improc
                 break
             end
 
-            end_pts(:,2) = size(L(:,:,j),2) - end_pts(:,2);
+            end_pts(:,2) = size(L(:,:,j),1) - end_pts(:,2);
             [~,ipr] = max( sqrt( end_pts(:,1).^2 + end_pts(:,2).^2));
             % find the position of the end points in the coordinate matrix
             [~,pos] = ismember(end_pts(ipr,:),crd{i,cnt}(:,:),'rows') ;
