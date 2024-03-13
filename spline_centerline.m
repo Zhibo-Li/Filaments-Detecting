@@ -1,11 +1,11 @@
 function xy= spline_centerline(xy,N_fil,ds,np)
 
-nend=cell(N_fil,1);
-for i = 1 : N_fil
+nend=cell(max(N_fil),1);
+for i = 1 : max(N_fil)
     nend{i} = 0.5*cellfun(@numel,xy(i).crd); % number of coordinates
 end
 
-for i = 1 : N_fil
+for i = 1 : max(N_fil)
     for j = 1 : xy(i).nframe
         
         cum = cumsum(xy(i).seglen{j}(:,1)); % array of the cumulative sum of centerline segments (cum(end)==arclen!!)
@@ -27,7 +27,7 @@ end
 %% arrange the centerline coordinates (knots) to be passed to the b-spline function
 
 
-for i = 1 : N_fil
+for i = 1 : max(N_fil)
     for j = 1 : xy(i).nframe
         
         % KNOTS(i,j) gives the j-th coordinate of the i-th knot. The knots can be of any dimension

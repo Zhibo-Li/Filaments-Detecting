@@ -1,4 +1,4 @@
-function [fiber_img,blur_img,BI,L,lzero] = skeletonization_of_single_frame(imgn,prmt,prmt_index)
+function [fiber_img,blur_img,BI,L,lzero,prmt_updated] = skeletonization_of_single_frame(imgn,prmt,prmt_index)
 
 %% Calculate the skeleton of an individual frame.
 
@@ -34,11 +34,24 @@ BI = bwareafilt(BI,FilNum); % extract object based on area, where FilNum is the 
 % smooth out the jags/irregularities along the boundary of the objects:
 bnd = bwboundaries(BI,'noholes'); % find boundary coordinates of all objects in the FOV
 % smooth the edges of each objects in the FOV, then recontruct a binary image for each objects
-for i = 1 % This is for parameters update, so there is only ONE interesting filament!
-    clear xc yc
-    xc = smooth(bnd{i}(:,1),1);
-    yc = smooth(bnd{i}(:,2),1);
-    s{i} = transpose(poly2mask(xc,yc,size(imgn,2)-2*lzero,size(imgn,1)-2*lzero));
+if length(bnd) == FilNum
+    for i = 1 : FilNum
+        clear xc yc
+        xc = smooth(bnd{i}(:,1),1);
+        yc = smooth(bnd{i}(:,2),1);
+        s{i} = transpose(poly2mask(xc,yc,size(imgn,2)-2*lzero,size(imgn,1)-2*lzero));
+    end
+    prmt_updated = prmt;
+else
+    for i = 1 : length(bnd)
+        clear xc yc
+        xc = smooth(bnd{i}(:,1),1);
+        yc = smooth(bnd{i}(:,2),1);
+        s{i} = transpose(poly2mask(xc,yc,size(imgn,2)-2*lzero,size(imgn,1)-2*lzero));
+    end
+    prmt_updated = prmt;
+    prmt_updated(prmt_index).FilNum = length(bnd);
+    % update the parameter set here !!!
 end
 % sum all objects, with smoothed edges, to recontruct the original binary image
 BI = logical(sum(cat(3,s{:}),3));

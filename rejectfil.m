@@ -1,4 +1,4 @@
-function xy = rejectfil(XY,centroid,improc,N_fil,ds,prcs_img,missed,framelist)
+function [xy, new_FilNum_ls] = rejectfil(XY,centroid,improc,N_fil,prcs_img,missed,framelist)
 
 %% OUTPUT: MATLAB STRUCTURE xy
 %
@@ -32,10 +32,13 @@ function xy = rejectfil(XY,centroid,improc,N_fil,ds,prcs_img,missed,framelist)
 
 
 %% calculate the arc length of each filament in each frame
+[~, pos] = ismember(prcs_img, framelist);
+N_fil = N_fil(pos); new_FilNum_ls = N_fil;
 
-for i = 1 : N_fil
+for i = 1 : max(N_fil)
     for j = 1 : improc
-        if numel(XY{i,j})< 2*ds % remove segments with length ~less than 2*ds
+        if numel(XY{i,j}) < 3 % 2*ds：remove segments with length ~less than 2*ds
+            % Change '2*ds' to 3 for Z-scanning filament detection.
             arclen(i,j)=NaN;
         else
             [arcl,segl] = arclength(XY{i,j}(:,1),XY{i,j}(:,2),'linear');
@@ -50,13 +53,14 @@ arclen(arclen==0)=NaN; % set to NaN zero-length filament
 
 
 if improc > 2 % compute only if we have statistics
-    mean_s = nanmean(arclen,2);
-    std_s = nanstd(arclen);   %std_s = nanstd(arclen,2); 
+    mean_s = mean(arclen,2,"omitnan");
+    std_s = std(arclen,0,2,"omitnan");    
     
     % accept only filaments within a range of arclengths, reorder the coordinates
     for j = 1 : improc
-        for i = 1 : N_fil
-            if abs(arclen(i,j)- mean_s(i)) < 3*std_s(i)   % 2*std_s(i)
+        for i = 1 : N_fil(j) 
+            if abs(arclen(i,j) - mean_s(i)) < 5*std_s(i) || std_s(i) == 0 % 2*std_s(i)
+                % Change to '5*std_s(i)' and add 'std_s(i) == 0' for Z-scanning filament detection.
                 XYr{i,j}(:,1) = XY{i,j}(:,1);
                 XYr{i,j}(:,2) = XY{i,j}(:,2);
             else
@@ -72,7 +76,7 @@ end
 % output coordinates
 xy=struct;
 missed = missed + framelist(1) - 1; % Add by Zhibo 
-for i = 1 : N_fil
+for i = 1 : max(N_fil)
     emptycell = cellfun('isempty',XYr(i,:)) ;
     xy(i).crd = XYr(i,imcomplement(emptycell));
     xy(i).centroid = centroid(i,imcomplement(emptycell));

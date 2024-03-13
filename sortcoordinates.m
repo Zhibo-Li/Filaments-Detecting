@@ -1,4 +1,4 @@
-function [XY,centroid,N_fil,improc,prcs_img,missed] = sortcoordinates(L,curr_img,FilNum)
+function [XY,centroid,improc,prcs_img,missed] = sortcoordinates(L,curr_img,FilNum)
 
 improc = size(L,3);
 
@@ -12,10 +12,10 @@ for j = 1 : improc
     % check if the number of filament correspond to what expected & store the
     % frame number where they do not coincide
     
-    if N_fil ~= FilNum   
+    if N_fil ~= FilNum(j)   
         % N_fil == FilNum == 1. Because I only choosed one in every frame (see skeletonization_multi_frames_calculation.m line 134 & 229). 
         disp(strcat('Error: wrong number of filaments in  image: ', num2str(j)))
-        disp(strcat('Expected:',num2str(FilNum)));
+        disp(strcat('Expected:',num2str(FilNum(j))));
         disp(strcat('Found:',num2str(N_fil)));
         missed = [missed,j];
         
@@ -98,9 +98,9 @@ for j = 1 : improc
     end
 end
 
-XY(prcs_img == 0) = []; % It's important !!!!!!
-centroid(prcs_img == 0) = []; % It's important !!!!!!
-prcs_img(prcs_img == 0) = []; % the missed marked as 0 above, here is to remove them.
+XY(:, prcs_img == 0) = []; % It's important !!!!!!
+centroid(:, prcs_img == 0) = []; % It's important !!!!!!
+prcs_img(:, prcs_img == 0) = []; % the missed marked as 0 above, here is to remove them.
 improc=improc-length(missed); % number of processed image, with right number of filaments
 end
 
