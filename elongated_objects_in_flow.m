@@ -92,10 +92,12 @@
 %% CODE
 clear; close all; clc;
 
-[filename, pathname]=uigetfile({['D:\Dropbox\Transfer\*.tif']}, 'Choose a file to be processed');  % input file
+[filename, pathname]=uigetfile({['Z:\Experimental Data (RAW)\Actin tracking\' ...
+    'Z-scan data\Zhibo Z scan 2024-02-23\*.tif']}, 'Choose a file to be processed');  % input file
 
 % path for the result files
-pathout = uigetdir(['D:\Dropbox\Transfer\Results\'], 'Choose the saving folder');
+pathout = uigetdir(['Z:\Experimental Data (RAW)\Actin tracking\Z-scan data\' ...
+    'Zhibo Z scan 2024-02-23\Results\'], 'Choose the saving folder');
 [status,msg,msgID] = mkdir(pathout);
 
 % path of the experiment
@@ -107,18 +109,18 @@ tifname=filename;
 % batch number where storing the results
 prmt(1).batch = 1;
 % number of filaments in the current image sequence
-prmt(1).FilNum = 4;
+prmt(1).FilNum = 1;
 % set the 'interrogation windows' offset
 prmt(1).xskip = 0;  % right(+) left(-)
 prmt(1).yskip = 0;  % up(+) down(-)
 % set the 'interrogation windows' size
-prmt(1).xwin = 400; 
-prmt(1).ywin = 400;
+prmt(1).xwin = 500; 
+prmt(1).ywin = 500;
 
 
 % define some parameters for the fibermetric filtering
 % fibermetric works better if the elongated object has a constant thickness across the image
-prmt(1).thickness = 5; % thickness of the filament in px
+prmt(1).thickness = 6; % thickness of the filament in px
 prmt(1).structsensitivity = 0.00002; % Here, the value indicates the percentage of the diff(getrangefromclass(I)).
 % !!! The structsensitivity of the results calculated before 2022/06/17
 % meant the absolute value. !!!
@@ -142,8 +144,8 @@ prmt(1).ds = 5; % constant segment length (in px) used for spacing the reference
 prmt(1).npnts = 5; % number of points per interval in the recontructed B-spline centerline
 
 %% Change the start frame:
-prmt(1).frame_start = 42; % the first frame you want to deal with.
-prmt(1).frame_end = 171; % the last frame you want to deal with.
+prmt(1).frame_start = 149; % the first frame you want to deal with.
+prmt(1).frame_end = 239; % the last frame you want to deal with.
 prmt_index = 1; % index of prmt
 
 %% TO CALCULATE!!!!!!!
