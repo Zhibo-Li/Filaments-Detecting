@@ -39,7 +39,8 @@ for i = 1 : max(N_fil)
     for j = 1 : improc
         if numel(XY{i,j}) < 3 % 2*ds：remove segments with length ~less than 2*ds
             % Change '2*ds' to 3 for Z-scanning filament detection.
-            arclen(i,j)=NaN;
+            arclen(i,j) = 0; % the length is 0 if there is only one point.
+            seglen{i,j} = 0;
         else
             [arcl,segl] = arclength(XY{i,j}(:,1),XY{i,j}(:,2),'linear');
             arclen(i,j) = arcl;
@@ -47,7 +48,7 @@ for i = 1 : max(N_fil)
         end
     end
 end
-arclen(arclen==0)=NaN; % set to NaN zero-length filament
+% arclen(arclen==0)=NaN; % set to NaN zero-length filament (don't need this for Z-scanning treatment)
 
 %% reject frames based on arclength
 
