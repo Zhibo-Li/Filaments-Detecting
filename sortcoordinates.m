@@ -43,10 +43,10 @@ for j = 1 : improc
 
             if size(end_pts, 1) == 1
                 XY{i,cnt} = crd{i,cnt}; % Not a filament (just a point)
-                break
+                continue
             elseif size(end_pts, 1) ~= 2
                 missed = [missed,j];  % Here, 'missed' means that there are not only two ends for the skeleton.
-                break
+                continue
             end
 
             end_pts(:,2) = size(L(:,:,j),1) - end_pts(:,2);
