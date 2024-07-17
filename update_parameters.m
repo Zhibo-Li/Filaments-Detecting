@@ -3,7 +3,7 @@ function [prmt_new, Good_case_out] = update_parameters(imgn,prmt, prmt_index, Go
 %% Recursive function to update the parameters for the image processing.
 
 [fiber_img,blur_img,BI,L,lzero] = skeletonization_of_single_frame(imgn,prmt,prmt_index); % retain 'lzero' to remind that 'gaussian_blur' function will shrink the image.
-figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [400 100 800 800]);
+figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [100 100 1200 600]);
 tiledlayout(2,2,'TileSpacing','Compact','Padding','Compact');
 nexttile
 imshow(labeloverlay(imadjust(imgn(lzero+1:end-lzero,lzero+1:end-lzero)),L,'Transparency',0,'Colormap','spring')); title('original image') 
@@ -34,7 +34,7 @@ else
                 [prmt_new, prmt_index_tmp] = VicFc_Inputs(prmt, prmt_index);
                 [fiber_img,blur_img,BI,L,lzero] = skeletonization_of_single_frame(imgn,prmt_new,prmt_index_tmp);
 
-                figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [400 100 800 800]);
+                figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [100 100 1200 600]);
                 tiledlayout(2,2,'TileSpacing','Compact','Padding','Compact');
                 nexttile
                 imshow(labeloverlay(imadjust(imgn(lzero+1:end-lzero,lzero+1:end-lzero)),L,'Transparency',0,'Colormap','spring')); title('original image')
@@ -63,7 +63,7 @@ else
                         [prmt_new, prmt_index_tmp] = VicFc_Inputs(prmt, prmt_index);
                         [fiber_img,blur_img,BI,L,lzero] = skeletonization_of_single_frame(imgn,prmt_new,prmt_index_tmp);
 
-                        figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [400 100 800 800]);
+                        figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [100 100 1200 600]);
                         tiledlayout(2,2,'TileSpacing','Compact','Padding','Compact');
                         nexttile
                         imshow(labeloverlay(imadjust(imgn(lzero+1:end-lzero,lzero+1:end-lzero)),L,'Transparency',0,'Colormap','spring')); title('original image')
@@ -95,7 +95,7 @@ else
                 [prmt_new, prmt_index_tmp] = VicFc_Inputs(prmt, prmt_index);
 
                 [fiber_img,blur_img,BI,L,lzero] = skeletonization_of_single_frame(imgn,prmt_new,prmt_index_tmp);
-                figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [400 100 800 800]);
+                figure('Name',['skeletonization results no.', num2str(prmt(prmt_index).frame_no)], 'Position', [100 100 1200 600]);
                 tiledlayout(2,2,'TileSpacing','Compact','Padding','Compact');
                 nexttile
                 imshow(labeloverlay(imadjust(imgn(lzero+1:end-lzero,lzero+1:end-lzero)),L,'Transparency',0,'Colormap','spring')); title('original image')

@@ -92,24 +92,27 @@
 %% CODE
 clear; close all; clc;
 
-[filename, pathname]=uigetfile({'G:\PhD, PMMH, ESPCI\Experimental Data (EXTRACTED)\20220624-SU8_Fibers-Individual_triangularPillar_uppoint\AfterAveBGR\*.tif'}, 'Choose a file to be processed');  % input file
+if_Multitiff = input('Do you input a multitiff file? (yes=1, no=0) ');
+if if_Multitiff == 1
+    % Choose a file to be processed
+    [tifname, basepath]=uigetfile({'Z:\*.tif'}, 'Choose a file to be processed');  % input file
+else
+    % Choose a folder and read all the *.tif files in the folder to analyze
+    basepath = uigetdir('Z:\Experimental Data (RAW)\DNA in Pillar Arrays\20240703 0o5nL Diluted100 M40\', 'Select the folder to analyze');
+    tifname = '~';
+end
 
 % path for the result files
-pathout = uigetdir('G:\PhD, PMMH, ESPCI\Processing\20220624-SU8_Fibers-Individual_triangularPillar_uppoint\results\', 'Choose the saving folder');
+pathout = uigetdir('F:\Processing & Results\DNA in Pillar Arrays\20240703 0o5nL Diluted100 M40\', 'Choose the saving folder');
 [status,msg,msgID] = mkdir(pathout);
-
-% path of the experiment
-basepath=pathname;
-% name of the file to read
-tifname=filename;
  
 % prmt: the parameters used for calculating.
 % batch number where storing the results
 prmt(1).batch = 1;
 % number of filaments in the current image sequence
-prmt(1).FilNum = 1;
+prmt(1).FilNum = 3;
 % set the 'interrogation windows' offset
-prmt(1).xskip = 20;  % right(+) left(-)
+prmt(1).xskip = 0;  % right(+) left(-)
 prmt(1).yskip = 0;  % up(+) down(-)
 % set the 'interrogation windows' size
 prmt(1).xwin = 600;
@@ -118,8 +121,9 @@ prmt(1).ywin = 300;
 
 % define some parameters for the fibermetric filtering
 % fibermetric works better if the elongated object has a constant thickness across the image
-prmt(1).thickness = 20; % thickness of the filament in px
-prmt(1).structsensitivity = 0.005; % Here, the value indicates the percentage of the diff(getrangefromclass(I)).
+prmt(1).thickness = 8; % thickness of the filament in px (vector of scales on which the vesselness is computed)
+
+prmt(1).structsensitivity = 0.000005; % Here, the value indicates the percentage of the diff(getrangefromclass(I)).
 % !!! The structsensitivity of the results calculated before 2022/06/17
 % meant the absolute value. !!!
 % threshold for differentiating the tubular structure from the background
@@ -128,13 +132,16 @@ prmt(1).structsensitivity = 0.005; % Here, the value indicates the percentage of
 % 2.55 for images of data type uint8, and the default is 0.01 for images of 
 % data type double with pixel values in the range [0, 1].
 
+% % % prmt(1).structsensitivity = 0.51; % Input of function 'vesselness2D' (instead of fibermetric).
+% % % % tau : (between 0.5 and 1) : parameter that controls response uniformity - lower tau -> more intense output response
+
 % define some parameters for the gaussian blur
 prmt(1).lnoise = 3; % characteristic lengthscale of noise in pixels
-prmt(1).lobject = 30; % typical object size
+prmt(1).lobject = 15; % typical object size
 prmt(1).threshold = 0.07; % threshhold for setting pixels to 0 after convolution with gaussian kernel
 
 % define some parameters for morphological operations
-prmt(1).sensitivity = 0.7; % sensitivity for adaptive image binarization
+prmt(1).sensitivity = 0.5; % sensitivity for adaptive image binarization
 prmt(1).MinBranchLength = 20; % minimum branch length, in pixel, to be accepted in the skel function
 
 % define some parameters for b-spline fitting procedure
@@ -142,12 +149,12 @@ prmt(1).ds = 5; % constant segment length (in px) used for spacing the reference
 prmt(1).npnts = 5; % number of points per interval in the recontructed B-spline centerline
 
 %% Change the start frame:
-prmt(1).frame_no = 3; % the first frame you want to deal with.
+prmt(1).frame_no = 1; % the first frame you want to deal with.
 prmt_index = 1; % index of prmt
 
 %% TO CALCULATE!!!!!!!
 
-elongated_objects_trajectories(pathout,basepath,tifname,prmt,prmt_index);
+elongated_objects_trajectories(pathout,basepath,tifname,prmt,prmt_index,if_Multitiff);
 
 
 

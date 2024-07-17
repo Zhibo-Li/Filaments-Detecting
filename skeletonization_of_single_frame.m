@@ -16,11 +16,12 @@ MinBranchLength = prmt(prmt_index).MinBranchLength;
 
 lzero = max(lobject,ceil(5*lnoise)); % size of each edges where gaussian_blur set values to 0
 
-% apply 2-D median filtering to remove the 'salt & pepper' noise.
-medfilt_imgn = medfilt2(imgn);
+% apply 2-D median filtering to remove the 'salt & pepper' noise (on top of the gaussian blur).
+medfilt_imgn = medfilt2(gaussian_blur(imgn,lnoise,lobject,threshold));
 
 % enanche fibers in the image with predefined thickness
 fiber_img = fibermetric(medfilt_imgn,thickness,'StructureSensitivity',structsensitivity);
+% % fiber_img = vesselness2D(medfilt_imgn,thickness,[1;1],structsensitivity,true);
 
 % apply gaussian blur
 blur_img = gaussian_blur(fiber_img,lnoise,lobject,threshold);
