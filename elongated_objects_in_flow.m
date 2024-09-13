@@ -121,7 +121,7 @@ prmt(1).ywin = 300;
 
 % define some parameters for the fibermetric filtering
 % fibermetric works better if the elongated object has a constant thickness across the image
-prmt(1).thickness = 8; % thickness of the filament in px (vector of scales on which the vesselness is computed)
+prmt(1).thickness = 10; % thickness of the filament in px (vector of scales on which the vesselness is computed)
 
 prmt(1).structsensitivity = 0.000005; % Here, the value indicates the percentage of the diff(getrangefromclass(I)).
 % !!! The structsensitivity of the results calculated before 2022/06/17
@@ -135,6 +135,9 @@ prmt(1).structsensitivity = 0.000005; % Here, the value indicates the percentage
 % % % prmt(1).structsensitivity = 0.51; % Input of function 'vesselness2D' (instead of fibermetric).
 % % % % tau : (between 0.5 and 1) : parameter that controls response uniformity - lower tau -> more intense output response
 
+% define a parameters to make the fiber_img brighter
+prmt(1).brightness = 5; % scale up the intensity on each pixel for the fiber_img.
+
 % define some parameters for the gaussian blur
 prmt(1).lnoise = 3; % characteristic lengthscale of noise in pixels
 prmt(1).lobject = 15; % typical object size
@@ -142,7 +145,7 @@ prmt(1).threshold = 0.07; % threshhold for setting pixels to 0 after convolution
 
 % define some parameters for morphological operations
 prmt(1).sensitivity = 0.5; % sensitivity for adaptive image binarization
-prmt(1).MinBranchLength = 20; % minimum branch length, in pixel, to be accepted in the skel function
+prmt(1).MinBranchLength = 10; % minimum branch length, in pixel, to be accepted in the skel function
 
 % define some parameters for b-spline fitting procedure
 prmt(1).ds = 5; % constant segment length (in px) used for spacing the reference points in the B-spline fitting

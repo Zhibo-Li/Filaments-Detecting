@@ -7,6 +7,8 @@ FilNum = prmt(prmt_index).FilNum;
 thickness = prmt(prmt_index).thickness;
 structsensitivity = prmt(prmt_index).structsensitivity * diff(getrangefromclass(imgn));
 
+brightness = prmt(prmt_index).brightness;
+
 lnoise = prmt(prmt_index).lnoise;
 lobject = prmt(prmt_index).lobject;
 threshold = prmt(prmt_index).threshold;
@@ -22,6 +24,7 @@ medfilt_imgn = medfilt2(gaussian_blur(imgn,lnoise,lobject,threshold));
 % enanche fibers in the image with predefined thickness
 fiber_img = fibermetric(medfilt_imgn,thickness,'StructureSensitivity',structsensitivity);
 % % fiber_img = vesselness2D(medfilt_imgn,thickness,[1;1],structsensitivity,true);
+fiber_img = fiber_img * brightness;
 
 % apply gaussian blur
 blur_img = gaussian_blur(fiber_img,lnoise,lobject,threshold);
